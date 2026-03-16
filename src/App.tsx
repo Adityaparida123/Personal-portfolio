@@ -6,6 +6,7 @@ function App() {
   const linkedinUrl = 'https://www.linkedin.com/'
   const email = 'adityaparidaomm@gmail.com'
   const phone = '+91 9348817891'
+  const resumeUrl = '/Resume.pdf'
 
   return (
     <div className="app">
@@ -35,22 +36,25 @@ function App() {
           <div className="heroCard">
             <p className="kicker">Portfolio</p>
             <h1 className="heroTitle">
-              B.Tech CSE student focused on{' '}
-              <span className="accent">software development</span>,{' '}
-              <span className="accent">AI</span>, and{' '}
-              <span className="accent">data analysis</span>.
+              Hi, I’m <span className="accent">Aditya Parida</span>
             </h1>
             <p className="heroSubtitle">
-              Seeking internship opportunities to gain real-world experience and
-              contribute to innovative technology solutions. Based in
-              Bhubaneswar, Odisha, India.
+              B.Tech Computer Science Student | Aspiring Software Developer
+            </p>
+            <p className="heroSubtitle" style={{ marginTop: 10 }}>
+              I build web applications, AI tools, and software projects.
+              Currently learning full-stack development and exploring AI
+              technologies.
             </p>
             <div className="heroActions">
               <a className="btn btnPrimary" href="#projects">
                 View projects
               </a>
+              <a className="btn btnGhost" href={resumeUrl} download>
+                Download resume
+              </a>
               <a className="btn btnGhost" href="#contact">
-                Let’s talk
+                Contact me
               </a>
             </div>
             <div className="heroMeta">
