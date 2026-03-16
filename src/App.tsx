@@ -3,8 +3,8 @@ import './App.css'
 import AntigravityBackground from './components/AntigravityBackground'
 
 function App() {
-  const githubUrl = 'https://github.com/'
-  const linkedinUrl = 'https://www.linkedin.com/'
+  const githubUrl = 'https://github.com/Adityaparida123'
+  const linkedinUrl = 'https://www.linkedin.com/in/aditya-parida-1248072a1'
   const email = 'adityaparidaomm@gmail.com'
   const phone = '+91 9348817891'
   const resumeUrl = '/Resume.pdf'
@@ -13,6 +13,7 @@ function App() {
   const typingSource =
     'B.Tech Computer Science Student | Aspiring Software Developer'
   const [typed, setTyped] = useState('')
+  const [skillsVisible, setSkillsVisible] = useState(false)
 
   useEffect(() => {
     const saved = window.localStorage.getItem('theme')
@@ -41,6 +42,27 @@ function App() {
     }, 45)
     return () => window.clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const el = document.getElementById('skills')
+    if (!el) return
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setSkillsVisible(true)
+            io.disconnect()
+            return
+          }
+        }
+      },
+      { threshold: 0.25 },
+    )
+
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
 
   const toggleTheme = () => {
@@ -158,6 +180,50 @@ function App() {
           </div>
         </section>
 
+        <section id="terminal" className="section container">
+          <h2 className="sectionTitle">Terminal</h2>
+          <div className="card terminal">
+            <div className="terminalTop">
+              <span className="dot dotRed" aria-hidden="true" />
+              <span className="dot dotYellow" aria-hidden="true" />
+              <span className="dot dotGreen" aria-hidden="true" />
+              <span className="terminalTitle">aditya@portfolio — zsh</span>
+            </div>
+            <div className="terminalBody">
+              <p className="terminalLine">
+                <span className="prompt">$</span> whoami
+              </p>
+              <p className="terminalOut">Aditya Parida</p>
+
+              <p className="terminalLine">
+                <span className="prompt">$</span> roles
+              </p>
+              <p className="terminalOut">
+                B.Tech CSE Student • Aspiring Software Developer
+              </p>
+
+              <p className="terminalLine">
+                <span className="prompt">$</span> skills
+              </p>
+              <p className="terminalOut">
+                Python • Java • C/C++ • HTML/CSS/JS • Django • Git/GitHub
+              </p>
+
+              <p className="terminalLine">
+                <span className="prompt">$</span> currently_learning
+              </p>
+              <p className="terminalOut">
+                Full‑stack development • AI tools • Better problem solving
+              </p>
+
+              <p className="terminalLine">
+                <span className="prompt">$</span> open_to
+              </p>
+              <p className="terminalOut">Internships</p>
+            </div>
+          </div>
+        </section>
+
         <section id="projects" className="section container">
           <h2 className="sectionTitle">Projects</h2>
           <div className="grid3">
@@ -166,14 +232,19 @@ function App() {
                 title: 'AI-Powered Financial Intelligence Platform',
                 desc: 'Analyzes financial data using AI techniques to generate insights and predictions, with modules for data collection, processing, and visualization.',
                 tags: ['AI', 'Data', 'Visualization'],
+                liveUrl: '',
+                codeUrl: '',
               },
               {
                 title: 'Personal Portfolio Website',
                 desc: 'A responsive portfolio website built with HTML, CSS, and JavaScript to showcase technical projects and skills with mobile-friendly layouts.',
                 tags: ['HTML', 'CSS', 'JavaScript'],
+                liveUrl: '',
+                codeUrl: '',
               },
             ].map((p) => (
               <article key={p.title} className="card project">
+                <div className="projectMedia" aria-hidden="true" />
                 <h3 className="projectTitle">{p.title}</h3>
                 <p className="muted">{p.desc}</p>
                 <div className="tags">
@@ -184,7 +255,20 @@ function App() {
                   ))}
                 </div>
                 <div className="projectLinks">
-                  <span className="muted">Add live/code links</span>
+                  {p.codeUrl ? (
+                    <a className="btn btnGhost btnSm" href={p.codeUrl} target="_blank" rel="noreferrer">
+                      GitHub
+                    </a>
+                  ) : (
+                    <span className="muted">Add GitHub link</span>
+                  )}
+                  {p.liveUrl ? (
+                    <a className="btn btnPrimary btnSm" href={p.liveUrl} target="_blank" rel="noreferrer">
+                      Live
+                    </a>
+                  ) : (
+                    <span className="muted">Add live link</span>
+                  )}
                 </div>
               </article>
             ))}
@@ -193,31 +277,82 @@ function App() {
 
         <section id="skills" className="section container">
           <h2 className="sectionTitle">Skills</h2>
-          <div className="card">
-            <div className="chips">
-              {[
-                'Python',
-                'Java',
-                'C/C++',
-                'JavaScript',
-                'HTML',
-                'CSS',
-                'Git',
-                'GitHub',
-                'Django',
-                'Data Structures',
-                'OOP',
-                'Algorithms',
-                'Database Systems',
-                'Operating Systems',
-                'Linux',
-                'VS Code',
-                'Microsoft Excel',
-              ].map((s) => (
-                <span key={s} className="chip">
-                  {s}
-                </span>
-              ))}
+          <div className="grid2">
+            <div className="card">
+              <p className="lead">Core skills</p>
+              <div className={`skillBars ${skillsVisible ? 'isVisible' : ''}`}>
+                {[
+                  { name: 'HTML/CSS', level: 85 },
+                  { name: 'JavaScript', level: 78 },
+                  { name: 'Python', level: 80 },
+                  { name: 'Java', level: 72 },
+                  { name: 'Django', level: 65 },
+                  { name: 'Data Structures', level: 75 },
+                ].map((s) => (
+                  <div key={s.name} className="skillRow">
+                    <div className="skillTop">
+                      <span className="skillName">{s.name}</span>
+                      <span className="skillPct">{s.level}%</span>
+                    </div>
+                    <div className="skillTrack" aria-hidden="true">
+                      <div className="skillFill" style={{ ['--pct' as never]: `${s.level}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="card">
+              <p className="lead">Tools & concepts</p>
+              <div className="chips" style={{ marginTop: 10 }}>
+                {[
+                  'C/C++',
+                  'Git',
+                  'GitHub',
+                  'OOP',
+                  'Algorithms',
+                  'Database Systems',
+                  'Operating Systems',
+                  'Linux',
+                  'VS Code',
+                  'Excel/PowerPoint',
+                ].map((s) => (
+                  <span key={s} className="chip">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="github" className="section container">
+          <h2 className="sectionTitle">GitHub</h2>
+          <div className="grid2">
+            <div className="card">
+              <p className="lead">GitHub stats</p>
+              <p className="muted">
+                These update automatically from your GitHub profile.
+              </p>
+              <div className="githubImgs" style={{ marginTop: 12 }}>
+                <img
+                  className="githubImg"
+                  alt="GitHub stats"
+                  loading="lazy"
+                  src={`https://github-readme-stats.vercel.app/api?username=adityaparida123&show_icons=true&theme=transparent&title_color=ff1f1f&text_color=ffffff&icon_color=ff1f1f`}
+                />
+              </div>
+            </div>
+            <div className="card">
+              <p className="lead">Contribution graph</p>
+              <p className="muted">Shows your recent coding activity.</p>
+              <div className="githubImgs" style={{ marginTop: 12 }}>
+                <img
+                  className="githubImg"
+                  alt="GitHub contribution graph"
+                  loading="lazy"
+                  src={`https://ghchart.rshah.org/ff1f1f/adityaparida123`}
+                />
+              </div>
             </div>
           </div>
         </section>
