@@ -21,6 +21,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root[data-theme='light'] {
+  --bg: #f6f5fb;
+  --card: #ffffff;
+  --border: rgba(15, 23, 42, 0.08);
+  --text: rgba(15, 23, 42, 0.78);
+  --text-strong: rgba(15, 23, 42, 0.96);
+  --accent: #e11d48;
+  color-scheme: light;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -30,10 +40,14 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: radial-gradient(1200px 700px at 20% -10%, rgba(255, 31, 31, 0.15), transparent 60%),
-    radial-gradient(900px 650px at 90% 10%, rgba(255, 31, 31, 0.10), transparent 55%),
+    radial-gradient(900px 650px at 90% 10%, rgba(255, 31, 31, 0.1), transparent 55%),
     var(--bg);
 }
 

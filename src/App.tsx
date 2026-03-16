@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 import AntigravityBackground from './components/AntigravityBackground'
 
@@ -7,6 +8,44 @@ function App() {
   const email = 'adityaparidaomm@gmail.com'
   const phone = '+91 9348817891'
   const resumeUrl = '/Resume.pdf'
+
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const typingSource =
+    'B.Tech Computer Science Student | Aspiring Software Developer'
+  const [typed, setTyped] = useState('')
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem('theme')
+    if (saved === 'light' || saved === 'dark') {
+      setTheme(saved)
+      document.documentElement.setAttribute('data-theme', saved)
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark')
+    }
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    window.localStorage.setItem('theme', theme)
+  }, [theme])
+
+  useEffect(() => {
+    setTyped('')
+    let i = 0
+    const interval = window.setInterval(() => {
+      i += 1
+      setTyped(typingSource.slice(0, i))
+      if (i >= typingSource.length) {
+        window.clearInterval(interval)
+      }
+    }, 45)
+    return () => window.clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+  }
 
   return (
     <div className="app">
@@ -18,16 +57,26 @@ function App() {
             <span className="brandMark" aria-hidden="true" />
             <span className="brandText">Aditya Parida</span>
           </a>
-          <nav className="nav" aria-label="Primary">
-            <a href="#top">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#education">Education</a>
-            <a href="#contact" className="navCta">
-              Contact
-            </a>
-          </nav>
+          <div className="headerRight">
+            <nav className="nav" aria-label="Primary">
+              <a href="#top">Home</a>
+              <a href="#about">About</a>
+              <a href="#skills">Skills</a>
+              <a href="#projects">Projects</a>
+              <a href="#education">Education</a>
+              <a href="#contact" className="navCta">
+                Contact
+              </a>
+            </nav>
+            <button
+              type="button"
+              className="themeToggle"
+              onClick={toggleTheme}
+              aria-label="Toggle light and dark mode"
+            >
+              {theme === 'dark' ? '☾' : '☀'}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -38,8 +87,11 @@ function App() {
             <h1 className="heroTitle">
               Hi, I’m <span className="accent">Aditya Parida</span>
             </h1>
-            <p className="heroSubtitle">
-              B.Tech Computer Science Student | Aspiring Software Developer
+            <p className="heroSubtitle heroSubtitleTyping">
+              <span>{typed}</span>
+              <span className="cursor" aria-hidden="true">
+                |
+              </span>
             </p>
             <p className="heroSubtitle" style={{ marginTop: 10 }}>
               I build web applications, AI tools, and software projects.
