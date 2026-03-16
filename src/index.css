@@ -1,0 +1,59 @@
+:root {
+  --bg: #06060a;
+  --card: #0e0e14;
+  --border: rgba(255, 255, 255, 0.12);
+  --text: rgba(255, 255, 255, 0.72);
+  --text-strong: rgba(255, 255, 255, 0.94);
+  --accent: #ff1f1f;
+
+  --sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+    'Noto Sans', 'Helvetica Neue', sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  color-scheme: dark;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 var(--sans);
+  text-rendering: geometricPrecision;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 700px at 20% -10%, rgba(255, 31, 31, 0.15), transparent 60%),
+    radial-gradient(900px 650px at 90% 10%, rgba(255, 31, 31, 0.10), transparent 55%),
+    var(--bg);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.container {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+::selection {
+  background: rgba(255, 31, 31, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
